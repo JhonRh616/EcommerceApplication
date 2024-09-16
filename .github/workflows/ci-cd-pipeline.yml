@@ -1,0 +1,74 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'temurin'
+        java-version: '17'
+
+    - name: Build with Maven
+      run: mvn clean install -DskipTests
+      working-directory: ./EcommerceApp
+
+    - name: Log in to Amazon ECR
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      run: |
+        aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 340752797995.dkr.ecr.us-east-2.amazonaws.com
+
+    - name: Build Docker images for each service
+      run: |
+        docker build -t ecommerce-eureka ./EcommerceApp/EcommerceEureka
+        docker build -t ecommerce-gateway ./EcommerceApp/EcommerceGateway
+        docker build -t ecommerce-microservice ./EcommerceApp/EcommerceMicroservice
+        docker build -t ecommerce-config ./EcommerceApp/EcommerceConfig
+        docker build -t ecommerce-front ./EcommerceApp/Front/Ecommerce-Front  # Agregar imagen Docker para el frontend
+        docker tag ecommerce-eureka:latest 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-eureka:latest
+        docker tag ecommerce-gateway:latest 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-gateway:latest
+        docker tag ecommerce-microservice:latest 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-microservice:latest
+        docker tag ecommerce-config:latest 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-config:latest
+        docker tag ecommerce-front:latest 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-front:latest  # Agregar etiqueta de imagen para el frontend
+
+    - name: Push Docker images to ECR
+      run: |
+        docker push 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-eureka:latest
+        docker push 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-gateway:latest
+        docker push 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-microservice:latest
+        docker push 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-config:latest
+        docker push 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-front:latest  # Empujar la imagen del frontend
+
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v0.1.3
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_KEY }}
+        script: |
+          aws ecr get-login-password --region us-east-2 | docker login --username AWS --password-stdin 340752797995.dkr.ecr.us-east-2.amazonaws.com
+
+          # Descargar Compose
+          cd /home/ubuntu/
+          curl -O https://raw.githubusercontent.com/JhonRh616/Ecommerce/main/EcommerceApp/docker-compose.yml
+          
+          docker network inspect ecommerce-network >/dev/null 2>&1 || docker network create ecommerce-network
+          docker pull 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-eureka:latest
+          docker pull 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-gateway:latest
+          docker pull 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-microservice:latest
+          docker pull 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-config:latest
+          docker pull 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-front:latest  # Descargar imagen del frontend
+          docker-compose down
+          docker-compose up -d

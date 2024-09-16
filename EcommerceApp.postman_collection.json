@@ -1,0 +1,138 @@
+{
+	"info": {
+		"_postman_id": "f737397e-719c-4208-b51c-b78f89cccafb",
+		"name": "EcommerceApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "14136236"
+	},
+	"item": [
+		{
+			"name": "Error Detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.138.186.134:8081/api/ecommerce/hello",
+					"protocol": "http",
+					"host": [
+						"3",
+						"138",
+						"186",
+						"134"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"ecommerce",
+						"hello"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listado Usuarios",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.138.186.134:8081/api/ecommerce/usuarios",
+					"protocol": "http",
+					"host": [
+						"3",
+						"138",
+						"186",
+						"134"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"ecommerce",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar ordenes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://3.138.186.134:8081/api/ecommerce/listar-ordenes",
+					"protocol": "http",
+					"host": [
+						"3",
+						"138",
+						"186",
+						"134"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"ecommerce",
+						"listar-ordenes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Crear Orden",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"idUsuario\": 1,\r\n  \"idProducto\": 1,\r\n  \"comentarios\": \"Prueba Dos\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://3.138.186.134:8081/api/ecommerce/crear-orden",
+					"protocol": "http",
+					"host": [
+						"3",
+						"138",
+						"186",
+						"134"
+					],
+					"port": "8081",
+					"path": [
+						"api",
+						"ecommerce",
+						"crear-orden"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Listar Productos",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://jk7kkadyve.execute-api.us-east-2.amazonaws.com/Produccion/ecommerce-producto",
+					"protocol": "https",
+					"host": [
+						"jk7kkadyve",
+						"execute-api",
+						"us-east-2",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"Produccion",
+						"ecommerce-producto"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

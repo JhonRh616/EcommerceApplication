@@ -1,0 +1,18 @@
+#App Config
+server:
+  port: 8080
+
+spring:
+  application:
+    name: EcommerceGateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: microservice
+          uri: lb://EcommerceMicroservice
+          predicates:
+            -  Path=/api/ecommerce/**
+

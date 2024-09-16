@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    #Desactivar Spring Cloud Config
+    config:
+      enabled: false
+  application:
+    name: EcommerceMicroservice
+  datasource:
+    url: jdbc:mysql://ecommerce.crec20oc0bfb.us-east-2.rds.amazonaws.com:3306/ecommerce
+    username: admin
+    password: Ecommerce1234*
+    driver-class-name: com.mysql.cj.jdbc.Driver
+server:
+  port: 8086
+
+eureka:
+  instance:
+    hostname: ecommerce-microservice
+  client:
+    service-url:
+      defaultZone: http://ecommerce-eureka:8761/eureka
+    register-with-eureka: true
+    fetch-registry: true

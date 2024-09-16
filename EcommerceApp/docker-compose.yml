@@ -1,0 +1,63 @@
+services:
+  ecommerce-config:
+    image: 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-config:latest
+    container_name: ecommerce-config
+    build:
+      context: ./EcommerceConfig
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./EcommerceConfig/configurations:/app/configurations
+    networks:
+      - ecommerce-network
+
+  ecommerce-eureka:
+    image: 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-eureka:latest
+    container_name: ecommerce-eureka
+    build:
+      context: ./EcommerceEureka
+    ports:
+      - "8761:8761"
+    depends_on:
+      - ecommerce-config
+    networks:
+      - ecommerce-network
+  
+  ecommerce-gateway:
+    image: 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-gateway:latest
+    container_name: ecommerce-gateway
+    build:
+      context: ./EcommerceGateway
+    ports:
+      - "8081:8080"
+    depends_on:
+      - ecommerce-eureka
+      - ecommerce-config
+    networks:
+      - ecommerce-network
+
+  ecommerce-microservice:
+    image: 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-microservice:latest
+    container_name: ecommerce-microservice
+    build:
+      context: ./EcommerceMicroservice
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ecommerce-config
+      - ecommerce-eureka
+      - ecommerce-gateway
+    networks:
+      - ecommerce-network
+
+  ecommerce-front:
+    image: 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-front:latest
+    container_name: ecommerce-front
+    ports:
+      - "8085:8085" 
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge
