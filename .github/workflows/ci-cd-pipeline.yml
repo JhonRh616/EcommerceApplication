@@ -62,7 +62,7 @@ jobs:
 
           # Descargar Compose
           cd /home/ubuntu/
-          curl -O https://raw.githubusercontent.com/JhonRh616/Ecommerce/main/EcommerceApp/docker-compose.yml
+          curl -O https://raw.githubusercontent.com/JhonRh616/EcommerceApplication/main/EcommerceApp/docker-compose.yml
           
           docker network inspect ecommerce-network >/dev/null 2>&1 || docker network create ecommerce-network
           docker pull 340752797995.dkr.ecr.us-east-2.amazonaws.com/ecommerce-eureka:latest
