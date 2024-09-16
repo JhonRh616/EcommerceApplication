@@ -32,3 +32,15 @@ El Pipeline consta de los siguientes pasos, se conmfigura la versión de JAVA 17
 Dentro del repositorio se encuentra una colección de Postman llamada EcommerceApp.postman_collection.json que puede ser importada desde el programa Postman para probar los servicios expuestos en la instancia de EC2 de AWS, estas apuntan directamente a las URL de la instancia y no habría que hacer nada más para que funcione.
 
 Para probar el Frontend localmente basta con importar el proyecto a un programa como Visual Studio o usar la consola para correrlo con el comando "npm start", para esto se debe contar con Angular y Node con anterioridad.
+
+La Url del Swagger con los servicios es la siguiente: http://3.138.186.134:8081/swagger-ui/index.html#/
+
+## Conexión a base de datos
+
+Para conectarse a base de datos es necesario usar un gestor de base de datos con las siguientes credenciales 
+
+Host: ecommerce.crec20oc0bfb.us-east-2.rds.amazonaws.com
+Puerto: 3306
+Base de Datos: ecommerce
+Usuario: admin
+Contraseña: Ecommerce1234*
