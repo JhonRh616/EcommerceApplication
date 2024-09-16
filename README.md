@@ -34,6 +34,7 @@ Dentro del repositorio se encuentra una colección de Postman llamada EcommerceA
 Para probar el Frontend localmente basta con importar el proyecto a un programa como Visual Studio o usar la consola para correrlo con el comando "npm start", para esto se debe contar con Angular y Node con anterioridad.
 
 La Url del Swagger con los servicios es la siguiente: http://3.138.186.134:8081/swagger-ui/index.html#/
+La Url del Front con los servicios es la siguiente: http://3.138.186.134:8085
 
 ## Conexión a base de datos
 
