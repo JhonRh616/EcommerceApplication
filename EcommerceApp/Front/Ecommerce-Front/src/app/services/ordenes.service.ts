@@ -23,8 +23,8 @@ interface OrdenesResponse {
 })
 export class OrdenesService {
 
-  private apiUrlGetOrdenes = 'http://3.15.207.65:8081/api/ecommerce/listar-ordenes'; 
-  private apiUrlCreateOrdenes = 'http://localhost:8081/api/ecommerce/crear-orden';
+  private apiUrlGetOrdenes = 'http://3.138.186.134:8081/api/ecommerce/listar-ordenes'; 
+  private apiUrlCreateOrdenes = 'http://3.138.186.134:8081/api/ecommerce/crear-orden';
 
   constructor(private http: HttpClient) {}
 

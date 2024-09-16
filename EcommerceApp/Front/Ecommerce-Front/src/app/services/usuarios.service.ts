@@ -15,7 +15,7 @@ export interface Usuario {
 })
 export class UsuariosService {
 
-  private apiUrl = 'http://3.15.207.65:8081/api/ecommerce/usuarios'; 
+  private apiUrl = 'http://3.138.186.134:8081/api/ecommerce/usuarios'; 
 
   constructor(private http: HttpClient) { }
 
